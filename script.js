@@ -125,3 +125,5 @@ window.addEventListener('load', function () {
         }, 100);
     }
 });
+
+//Task 1 JS complete
