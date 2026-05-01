@@ -95,3 +95,5 @@ $result = $conn->query($sql);
 </main>
 
 <?php include('footer.php'); ?>
+
+<!-- Admin Dashboard Finalized -->
