@@ -2,7 +2,7 @@
 include('db.php'); 
 include('header.php'); 
 
-// --- 1. DATABASE INSERT LOGIC ---
+// 1. FORM PROCESSING LOGIC
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']); 
@@ -10,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $priority = mysqli_real_escape_string($conn, $_POST['prio']);
     $message = mysqli_real_escape_string($conn, $_POST['message']);
 
-    // INSERT query aligned with Admin Dashboard requirements
     $sql = "INSERT INTO inquiries (name, email, type, priority, message, status) 
             VALUES ('$name', '$email', '$type', '$priority', '$message', 'Unread')";
 
@@ -22,18 +21,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// --- 2. THE SAFETY SHIELD (Fixes Fatal Error in image_99421d.jpg) ---
+// 2. CATEGORY FETCHING (Graceful failure if table doesn't exist)
 $categories = false;
-$table_exists = mysqli_query($conn, "SHOW TABLES LIKE 'categories'");
-
-if (mysqli_num_rows($table_exists) > 0) {
-    $cat_query = "SELECT * FROM categories";
-    $categories = mysqli_query($conn, $cat_query);
+$table_check = mysqli_query($conn, "SHOW TABLES LIKE 'categories'");
+if (mysqli_num_rows($table_check) > 0) {
+    $categories = mysqli_query($conn, "SELECT * FROM categories");
 }
 ?>
 
 <main>
-    <!-- SECTION 1: MULTIMEDIA -->
     <section id="media">
         <h2>Creative Showcase</h2>
         <div class="video-container">
@@ -51,7 +47,6 @@ if (mysqli_num_rows($table_exists) > 0) {
         </div>
     </section>
 
-    <!-- SECTION 2: ACADEMIC TABLE -->
     <section id="education">
         <h2>Academic Summary</h2>
         <div class="table-container">
@@ -74,10 +69,9 @@ if (mysqli_num_rows($table_exists) > 0) {
         </div>
     </section>
 
-    <!-- SECTION 3: PROJECTS (THE RESTORED SECTION) -->
     <section id="projects-section">
         <h2>My Projects</h2>
-        <div id="projects" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+        <div id="projects">
             <?php foreach($my_projects as $project): ?>
                 <article class="project-card">
                     <h3><?php echo htmlspecialchars($project['title']); ?></h3>
@@ -88,20 +82,17 @@ if (mysqli_num_rows($table_exists) > 0) {
         </div>
     </section>
 
-    <!-- SECTION 4: CONTACT -->
     <section id="contact">
         <h2>Contact Inquiry</h2>
         <form action="index.php" method="POST" id="contactForm">
             <div class="form-group">
                 <label for="userName">Full Name:</label>
-                <input type="text" name="name" id="userName" placeholder="Aryan Sarkar">
+                <input type="text" name="name" id="userName" placeholder="Your Name" required>
             </div>
-
             <div class="form-group">
                 <label for="userEmail">Email Address:</label>
-                <input type="email" name="email" id="userEmail" placeholder="example@mail.com">
+                <input type="email" name="email" id="userEmail" placeholder="example@mail.com" required>
             </div>
-            
             <div class="form-group">
                 <label for="inquiryType">Inquiry Type:</label>
                 <select name="type" id="inquiryType">
@@ -111,14 +102,12 @@ if (mysqli_num_rows($table_exists) > 0) {
                             echo "<option value='".htmlspecialchars($cat['cat_name'])."'>".htmlspecialchars($cat['cat_name'])."</option>";
                         }
                     } else {
-                        echo "<option value='Internship'>Internship</option>";
-                        echo "<option value='Project Collaboration'>Project Collaboration</option>";
                         echo "<option value='General Inquiry'>General Inquiry</option>";
+                        echo "<option value='Internship'>Internship</option>";
                     }
                     ?>
                 </select>
             </div>
-
             <div class="priority-container">
                 <label>Priority Level:</label>
                 <div class="radio-options">
@@ -126,19 +115,14 @@ if (mysqli_num_rows($table_exists) > 0) {
                     <label><input type="radio" name="prio" value="Urgent"> Urgent</label>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="userMessage">Message:</label>
                 <textarea name="message" id="userMessage" rows="4" placeholder="How can I help you?"></textarea>
                 <small id="charCount">0 / 50 characters maximum</small>
             </div>
-
             <div class="checkbox-group">
-                <label style="display: flex; align-items: center; gap: 10px; font-weight: normal; cursor: pointer;">
-                    <input type="checkbox" name="terms" id="termsBox"> I agree to be contacted.
-                </label>
+                <label><input type="checkbox" name="terms" id="termsBox"> I agree to be contacted.</label>
             </div>
-
             <button type="button" id="submitBtn">Submit Details</button>
         </form>
     </section>

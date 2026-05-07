@@ -1,8 +1,9 @@
 <?php
+// Database Configuration
 $servername = "localhost";
 $username = "root"; 
 $password = ""; 
-$dbname = "portfolio_db"; // Double check that this is exactly what you named it in phpMyAdmin!
+$dbname = "portfolio_db"; 
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
