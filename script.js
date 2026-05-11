@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.onclick = () => {
             if (!document.getElementById('userName').value.trim()) {
                 alert("Name required.");
+            } else if (!document.getElementById('userEmail').value.trim()) {
+                alert("Email required.");
             } else if (msgInput.value.length > 50) {
                 alert("Message is too long.");
             } else if (!document.getElementById('termsBox').checked) {
