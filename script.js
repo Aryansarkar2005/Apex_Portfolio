@@ -49,7 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (!document.getElementById('termsBox').checked) {
                 alert("Please accept the terms.");
             } else {
-                document.getElementById('contactForm').submit();
+                alert("Message sent successfully!");
+                document.getElementById('contactForm').reset();
+                countDiv.innerText = "0 / 50 characters";
+                countDiv.style.color = "#d2b48c";
+                countDiv.style.opacity = "0.6";
+                countDiv.style.textShadow = "none";
             }
         };
     }
