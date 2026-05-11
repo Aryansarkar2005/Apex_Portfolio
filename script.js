@@ -1,68 +1,56 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // 1. DOM Elements
-    const contactForm = document.getElementById('contactForm');
-    const nameInput = document.getElementById('userName');
-    const emailInput = document.getElementById('userEmail');
-    const messageInput = document.getElementById('userMessage');
-    const charCountDisplay = document.getElementById('charCount');
-    const termsBox = document.getElementById('termsBox');
-    const submitBtn = document.getElementById('submitBtn');
+document.addEventListener('DOMContentLoaded', () => {
+    const headerHeight = 85;
+
+    // 1. Navigation Logic
+    document.querySelectorAll('nav a').forEach(link => {
+        link.onclick = (e) => {
+            const href = link.getAttribute('href');
+            if (href.includes('#')) {
+                e.preventDefault();
+                const target = document.querySelector('#' + href.split('#')[1]);
+                if (target) window.scrollTo({ top: target.offsetTop - headerHeight, behavior: 'smooth' });
+            }
+        };
+    });
 
     // 2. Character Counter
-    if (messageInput && charCountDisplay) {
-        messageInput.addEventListener('keyup', function () {
-            const length = messageInput.value.length;
-            charCountDisplay.textContent = `${length} / 50 characters maximum`;
+    const msgInput = document.getElementById('userMessage');
+    const countDiv = document.getElementById('charCount');
 
-            if (length > 50) {
-                charCountDisplay.style.color = "#ef4444";
-                messageInput.style.border = "2px solid #ef4444";
+    if (msgInput && countDiv) {
+        msgInput.addEventListener('input', () => {
+            const val = msgInput.value.length;
+            countDiv.innerText = `${val} / 50 characters`;
+
+            if (val === 0) {
+                countDiv.style.color = "#d2b48c";
+                countDiv.style.opacity = "0.6";
+                countDiv.style.textShadow = "none";
+            } else if (val <= 50) {
+                countDiv.style.color = "#2ecc71";
+                countDiv.style.opacity = "1";
+                countDiv.style.textShadow = "0 0 10px rgba(46, 204, 113, 0.6)";
             } else {
-                charCountDisplay.style.color = "#4ade80";
-                messageInput.style.border = "1px solid rgba(255, 255, 255, 0.1)";
+                countDiv.style.color = "#ff4d4d";
+                countDiv.style.opacity = "1";
+                countDiv.style.textShadow = "0 0 10px rgba(255, 77, 77, 0.6)";
             }
         });
     }
 
-    // 3. Form Validation and Submission
-    if (submitBtn && contactForm) {
-        submitBtn.addEventListener('click', function () {
-            const nameValue = nameInput.value.trim();
-            const emailValue = emailInput.value.trim();
-            const messageValue = messageInput.value.trim();
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            let error = "";
-
-            if (nameValue === "") error = "Please enter your name.";
-            else if (!emailPattern.test(emailValue)) error = "Please enter a valid email.";
-            else if (messageValue.length > 50) error = "Message too long!";
-            else if (termsBox && !termsBox.checked) error = "Please agree to the terms.";
-
-            if (error !== "") {
-                alert(error);
+    // 3. Validation Logic
+    const btn = document.getElementById('submitBtn');
+    if (btn) {
+        btn.onclick = () => {
+            if (!document.getElementById('userName').value.trim()) {
+                alert("Name required.");
+            } else if (msgInput.value.length > 50) {
+                alert("Message is too long.");
+            } else if (!document.getElementById('termsBox').checked) {
+                alert("Please accept the terms.");
             } else {
-                contactForm.submit();
+                document.getElementById('contactForm').submit();
             }
-        });
+        };
     }
-});
-
-// 4. Smooth Scroll with Header Offset
-document.querySelectorAll('nav a[href*="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const url = new URL(this.href);
-        if (url.pathname === window.location.pathname || url.pathname === '/index.php') {
-            const targetId = url.hash.substring(1);
-            const targetElement = document.getElementById(targetId);
-            if (targetElement) {
-                e.preventDefault();
-                const headerHeight = document.querySelector('header').offsetHeight;
-                window.scrollTo({
-                    top: targetElement.offsetTop - headerHeight,
-                    behavior: "smooth"
-                });
-            }
-        }
-    });
 });
