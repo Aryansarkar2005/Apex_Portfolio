@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="termsBox" class="terms-label">I agree to be contacted.</label>
                 </div>
             </div>
-            <button type="button" id="submitBtn">Send Message</button>
+            <button type="submit" id="submitBtn">Send Message</button>
         </form>
     </section>
 </main>

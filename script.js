@@ -52,12 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("Please accept the terms.");
             } else {
                 alert("Message sent successfully!");
+                // THIS IS THE ONLY LINE WE ARE ADDING:
+                document.getElementById('contactForm').submit();
+
                 document.getElementById('contactForm').reset();
                 countDiv.innerText = "0 / 50 characters";
-                countDiv.style.color = "#d2b48c";
-                countDiv.style.opacity = "0.6";
-                countDiv.style.textShadow = "none";
+                // ... rest of your styling code
             }
-        };
-    }
-});
+            countDiv.style.color = "#d2b48c";
+            countDiv.style.opacity = "0.6";
+            countDiv.style.textShadow = "none";
+        }
+    };
+}
+);
