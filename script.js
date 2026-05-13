@@ -64,5 +64,59 @@ document.addEventListener('DOMContentLoaded', () => {
             countDiv.style.textShadow = "none";
         }
     };
-}
-);
+
+    // 4. Custom Picture Showcase Logic
+    const nextBtn = document.getElementById('nextPictureBtn');
+    const showcaseImg = document.getElementById('showcaseImage');
+    const showcaseCaption = document.getElementById('showcaseCaption');
+
+    if (nextBtn && showcaseImg && showcaseCaption) {
+        const images = [
+            { src: 'assets/project(1).png', caption: 'Showcase 1' },
+            { src: 'assets/project(2).png', caption: 'Showcase 2' }
+        ];
+        let currentIdx = 0;
+
+        nextBtn.addEventListener('click', () => {
+            currentIdx = (currentIdx + 1) % images.length;
+            
+            // Fade out
+            showcaseImg.style.opacity = 0;
+            showcaseCaption.style.opacity = 0;
+            
+            setTimeout(() => {
+                showcaseImg.src = images[currentIdx].src;
+                showcaseCaption.innerText = images[currentIdx].caption;
+                
+                // Fade in
+                showcaseImg.style.opacity = 1;
+                showcaseCaption.style.opacity = 1;
+            }, 400);
+        });
+    }
+
+    // 5. Video Play/Pause Overlay Logic
+    const video = document.getElementById('showcaseVideo');
+    const videoOverlay = document.getElementById('videoClickArea');
+
+    if (video && videoOverlay) {
+        const togglePlay = () => {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        };
+
+        videoOverlay.addEventListener('click', togglePlay);
+
+        // Update UI based on video state
+        video.addEventListener('play', () => {
+            videoOverlay.classList.add('playing');
+        });
+
+        video.addEventListener('pause', () => {
+            videoOverlay.classList.remove('playing');
+        });
+    }
+});

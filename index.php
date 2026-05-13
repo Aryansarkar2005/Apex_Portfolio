@@ -36,13 +36,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p>Current Status: <strong>3rd Year Undergraduate</strong> at <?php echo $my_university; ?></p>
         <p>Focusing on ultra-realistic AI generation and cinematic development.</p>
         
-        <div class="multimedia-showcase">
-            <video width="100%" controls>
-                <source src="assets/ai-showcase.mp4" type="video/mp4">
-            </video>
-            <audio controls>
-                <source src="assets/intro-audio.mp3" type="audio/mpeg">
-            </audio>
+        <div class="custom-showcase-container">
+            <div class="custom-showcase-box">
+                <img id="showcaseImage" src="assets/project(1).png" alt="Showcase Image">
+                <button id="nextPictureBtn" class="next-picture-btn">&#10095;</button>
+                <div id="showcaseCaption" class="showcase-caption">Showcase 1</div>
+            </div>
+        </div>
+
+        <div class="video-showcase-container">
+            <div class="glassmorphism-video-box">
+                <div class="video-wrapper">
+                    <video id="showcaseVideo" width="100%" controls>
+                        <source src="assets/ai-showcase.mp4" type="video/mp4">
+                    </video>
+                    <div id="videoClickArea" class="video-overlay">
+                        <div class="play-pause-icon" id="playPauseIcon">&#9658;</div>
+                    </div>
+                </div>
+                <div class="video-caption">Showcase Video</div>
+            </div>
+            
+            <div class="audio-container">
+                <audio controls>
+                    <source src="assets/intro-audio.mp3" type="audio/mpeg">
+                </audio>
+            </div>
         </div>
     </section>
 
@@ -102,7 +121,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="form-group">
                 <label for="userMessage">Message:</label>
                 <input type="text" id="userMessage" name="message" placeholder="How can I help you?">
-                
                 <div id="charCount">0 / 50 characters</div>
             </div>
             <div class="checkbox-row">
@@ -115,5 +133,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </section>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js?v=<?php echo time(); ?>"></script>
 <?php include('footer.php'); ?>

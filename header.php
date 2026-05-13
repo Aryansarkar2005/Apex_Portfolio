@@ -26,7 +26,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aryan Returns!</title>
+    <title><?php echo isset($page_title) ? $page_title : 'Aryan Returns!'; ?></title>
+    
+    <?php if(isset($use_bootstrap) && $use_bootstrap): ?>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <?php endif; ?>
+
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
 </head>
 <body>
@@ -37,10 +44,11 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.php#home">HOME</a></li>
-                    <li><a href="index.php#projects-section">PROJECTS</a></li>
-                    <li><a href="index.php#contact">CONNECT</a></li>
-                    <li><a href="admin.php">ADMIN</a></li>
+                    <li><a href="index.php#home"><span class="material-symbols-outlined nav-icon">home</span> HOME</a></li>
+                    <li><a href="index.php#projects-section"><span class="material-symbols-outlined nav-icon">work</span> PROJECTS</a></li>
+                    <li><a href="index.php#contact"><span class="material-symbols-outlined nav-icon">mail</span> CONNECT</a></li>
+                    <li><a href="admin.php"><span class="material-symbols-outlined nav-icon">admin_panel_settings</span> ADMIN</a></li>
+                    <li><a href="login.php"><span class="material-symbols-outlined nav-icon">login</span> LOGIN (TASK 2)</a></li>
                 </ul>
             </nav>
         </div>
