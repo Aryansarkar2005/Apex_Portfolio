@@ -48,8 +48,8 @@
                     <li><a href="index.php#projects-section"><span class="material-symbols-outlined nav-icon">work</span> PROJECTS</a></li>
                     <li><a href="index.php#contact"><span class="material-symbols-outlined nav-icon">mail</span> CONNECT</a></li>
                     <li><a href="admin.php"><span class="material-symbols-outlined nav-icon">admin_panel_settings</span> ADMIN</a></li>
-                    <li><a href="login.php"><span class="material-symbols-outlined nav-icon">login</span> LOGIN (TASK 2)</a></li>
+                    <li><a href="login.php"><span class="material-symbols-outlined nav-icon">login</span> LOGIN </a></li>
                 </ul>
             </nav>
         </div>
-    </header>
+    </header>  
