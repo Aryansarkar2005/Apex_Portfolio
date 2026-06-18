@@ -1,13 +1,16 @@
 <?php
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     $my_name = "Aryan Sarkar";
     $my_university = "C. V. Raman Global University";
 
     $my_projects = [
+        ["title" => "ECom Website", "tech" => "PHP, MySQL & HTML/CSS", "status" => "Completed", "link" => "STAR/index.php"],
         ["title" => "Aurawings", "tech" => "PHP & MySQL", "status" => "Completed"],
         ["title" => "Accident Detection", "tech" => "Python & ML", "status" => "Completed"],
         ["title" => "AI Resume Parser", "tech" => "Python & NLP", "status" => "Completed"],
-        ["title" => "Autocorrect AI", "tech" => "Python", "status" => "Completed"],
-        ["title" => "New AI Project", "tech" => "Python & LLM", "status" => "In Progress"]
+        ["title" => "Autocorrect AI", "tech" => "Python", "status" => "Completed"]
     ];
 
     $academic_history = [
@@ -47,8 +50,33 @@
                     <li><a href="index.php#home"><span class="material-symbols-outlined nav-icon">home</span> HOME</a></li>
                     <li><a href="index.php#projects-section"><span class="material-symbols-outlined nav-icon">work</span> PROJECTS</a></li>
                     <li><a href="index.php#contact"><span class="material-symbols-outlined nav-icon">mail</span> CONNECT</a></li>
-                    <li><a href="admin.php"><span class="material-symbols-outlined nav-icon">admin_panel_settings</span> ADMIN</a></li>
-                    <li><a href="login.php"><span class="material-symbols-outlined nav-icon">login</span> LOGIN </a></li>
+                    <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                        <?php if (isset($_SESSION['role_name']) && $_SESSION['role_name'] === 'Admin'): ?>
+                            <li><a href="admin.php"><span class="material-symbols-outlined nav-icon">admin_panel_settings</span> ADMIN</a></li>
+                        <?php endif; ?>
+                        
+                        <?php
+                        $nav_pic = "uploads/default.png";
+                        if (!empty($_SESSION['profile_picture'])) {
+                            if (filter_var($_SESSION['profile_picture'], FILTER_VALIDATE_URL)) {
+                                $nav_pic = $_SESSION['profile_picture'];
+                            } else {
+                                $nav_pic = "uploads/" . $_SESSION['profile_picture'];
+                            }
+                        }
+                        $nav_username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : "Profile";
+                        ?>
+                        <li>
+                            <a href="profile.php" style="display:flex; align-items:center; gap:8px;">
+                                <img src="<?php echo htmlspecialchars($nav_pic); ?>" alt="Avatar" style="width:30px; height:30px; border-radius:50%; object-fit:cover; border: 2px solid white;" onerror="this.src='https://ui-avatars.com/api/?name=<?php echo urlencode($nav_username); ?>&background=random';">
+                                <?php echo $nav_username; ?>
+                            </a>
+                        </li>
+
+                        <li><a href="logout.php"><span class="material-symbols-outlined nav-icon">logout</span> LOGOUT</a></li>
+                    <?php else: ?>
+                        <li><a href="login.php"><span class="material-symbols-outlined nav-icon">login</span> LOGIN</a></li>
+                    <?php endif; ?>
                 </ul>
             </nav>
         </div>

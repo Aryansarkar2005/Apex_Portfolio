@@ -93,7 +93,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <article class="project-card">
                     <h3><?php echo htmlspecialchars($p['title']); ?></h3>
                     <p class="project-tech">Tech: <?php echo htmlspecialchars($p['tech']); ?></p>
-                    <p><?php echo getStatusBadge($p['status']); ?></p>
+                    <p style="margin-bottom: 20px;"><?php echo getStatusBadge($p['status']); ?></p>
+                    
+                    <?php if (isset($p['link']) && !empty($p['link'])): ?>
+                        <a href="<?php echo htmlspecialchars($p['link']); ?>" class="view-project-btn" target="_blank">View Project</a>
+                    <?php endif; ?>
                 </article>
             <?php endforeach; ?>
         </div>
